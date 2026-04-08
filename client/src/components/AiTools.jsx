@@ -8,35 +8,55 @@ const AiTools = () => {
   const { user } = useUser();
 
   return (
-    <div className="px-4 sm:px-20 xl:px-32 my-24">
-      <div className="text-center">
-        <h2 className="text-slate-700 text-[40px] font-semibold">
-          Unleash the Power of AI
+    <div className="relative px-6 sm:px-12 xl:px-32 py-32 bg-background">
+      <div className="text-center mb-20 relative z-10">
+        <h2 className="text-4xl md:text-5xl font-bold text-text-main mb-6 tracking-tight">
+          Unleash the <span className="text-gradient">Power of AI</span>
         </h2>
-        <p className="text-gray-500 max-w-lg mx-auto">
+        <p className="text-text-muted text-lg max-w-2xl mx-auto font-light leading-relaxed">
           Access a suite of intelligent tools to create, refine, and elevate
           your content — faster, smarter, and with unmatched precision.
         </p>
       </div>
-      <div className="flex flex-wrap mt-10 justify-center">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto relative z-10">
         {AiToolsData.map((tool, index) => (
           <div
             key={index}
-            className="p-8 m-4 max-w-xs rounded-lg bg-[#FDFDFE] shadow-lg border border-gray-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+            className="group glass-panel p-8 rounded-2xl hover-lift cursor-pointer overflow-hidden relative"
             onClick={() =>
               user ? navigate(tool.path) : toast.error("Sign in first to start creating.")
             }
           >
-            <tool.Icon
-              className="w-12 h-12 p-3 text-white rounded-xl"
-              style={{
-                background: `linear-gradient(to bottom, ${tool.bg.from}, ${tool.bg.to})`,
-              }}
-            />
-            <h3 className="mt-6 mb-3 text-lg font-semibold">{tool.title}</h3>
-            <p className="text-gray-400 text-sm max-w-[95%]">
-              {tool.description}
-            </p>
+            {/* Subtle glow effect on hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            <div className="relative z-10 flex flex-col h-full">
+              <div className="mb-8">
+                <div className="inline-flex p-4 rounded-xl relative">
+                  <div 
+                    className="absolute inset-0 opacity-20 rounded-xl blur-md"
+                    style={{ background: `linear-gradient(to bottom right, ${tool.bg.from}, ${tool.bg.to})` }}
+                  />
+                  <tool.Icon
+                    className="w-8 h-8 text-white relative z-10"
+                    style={{ textShadow: '0 0 20px rgba(255,255,255,0.5)' }}
+                  />
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-semibold text-text-main mb-3 group-hover:text-primary transition-colors">
+                {tool.title}
+              </h3>
+              
+              <p className="text-text-muted leading-relaxed font-light flex-grow">
+                {tool.description}
+              </p>
+              
+              <div className="mt-8 flex items-center text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                Launch Tool &rarr;
+              </div>
+            </div>
           </div>
         ))}
       </div>
