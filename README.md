@@ -6,7 +6,7 @@ A full-stack SaaS platform offering a suite of AI-powered tools including articl
 
 ## 🌐 Live Preview
 
-Check out the live app here: [https://quickai-nine.vercel.app](https://quickai-nine.vercel.app)
+Check out the live app here: https://quick-saa-s-app.vercel.app/
 
 ---
 
