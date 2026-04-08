@@ -33,48 +33,54 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="h-full overflow-y-scroll p-6">
-      <div className="flex justify-center gap-4 flex-wrap">
+    <div className="h-full px-2 sm:px-8 max-w-6xl mx-auto">
+      <div className="flex flex-col sm:flex-row gap-6 mb-8 pt-4">
         {/* Total creation card */}
-        <div className="flex justify-between items-center w-72 p-4 px-6 bg-white rounded-xl border-gray-200">
-          <div className="text-slate-600">
-            <p className="text-sm">Total Creations</p>
-            <h2 className="text-lg font-semibold">{creations.length}</h2>
+        <div className="flex-1 clean-card p-6 flex justify-between items-center bg-white">
+          <div>
+            <p className="text-sm font-medium text-text-muted mb-1">Total Creations</p>
+            <h2 className="text-3xl font-bold text-text-main">{creations.length}</h2>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#3588F2] to-[#0BB0D7] text-white flex justify-center items-center">
-            <Sparkles className="w-5 text-white" />
+          <div className="w-12 h-12 rounded-xl bg-blue-50 text-primary flex justify-center items-center">
+            <Sparkles className="w-6 h-6" />
           </div>
         </div>
+        
         {/* Active plan card */}
-        <div className="flex justify-between items-center w-72 p-4 px-6 bg-white rounded-xl border-gray-200">
-          <div className="text-slate-600">
-            <p className="text-sm">Active Plan</p>
-            <h2 className="text-lg font-semibold">
-              <Protect plan="premium" fallback="free">
+        <div className="flex-1 clean-card p-6 flex justify-between items-center bg-white">
+          <div>
+            <p className="text-sm font-medium text-text-muted mb-1">Active Plan</p>
+            <h2 className="text-3xl font-bold text-text-main flex items-center gap-2">
+              <Protect plan="premium" fallback="Free">
                 Premium
               </Protect>
             </h2>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#FF61C5] to-[#9E53EE] text-white flex justify-center items-center">
-            <Gem className="w-5 text-white" />
+          <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex justify-center items-center">
+            <Gem className="w-6 h-6" />
           </div>
         </div>
       </div>
-      {
-        loading ? (
-          <div className="flex justify-center items-center h-3/4">
-            <div className="animate-spin rounded-full h-11 w-11 border-3 border-purple-500 border-t-transparent">
+
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-10 w-10 border-4 border-surface border-t-primary"></div>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-text-main mt-8 mb-4">Recent Creations</h2>
+          {creations.length > 0 ? (
+            creations.map((item) => (
+              <CreationItem key={item.id} item={item} content={creations.content} />
+            ))
+          ) : (
+            <div className="text-center py-16 clean-card bg-surface-hover border-dashed">
+              <p className="text-text-muted font-medium">No creations yet.</p>
+              <p className="text-sm text-text-muted mt-1 font-light">Start building amazing content from the sidebar tools.</p>
             </div>
-          </div>
-        ) : (
-          <div className="space-y-3">
-        <h2 className="text-2xl flex justify-center font-semibold text-gray-800 mt-6 mb-4">Recent Creations</h2>
-        {creations.map((item) => (
-          <CreationItem key={item.id} item={item} content={creations.content}/>
-        ))}
-      </div>
-        )
-      }
+          )}
+        </div>
+      )}
     </div>
   );
 };

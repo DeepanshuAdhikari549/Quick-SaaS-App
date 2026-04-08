@@ -7,47 +7,44 @@ const CreationItem = ({ item }) => {
   return (
     <div
       onClick={() => setExpanded(!expanded)}
-      className="p-4 max-w-5xl text-sm bg-white border border-gray-200 rounded-lg cursor-pointer"
+      className="p-5 max-w-5xl text-sm clean-card cursor-pointer"
     >
       <div className="flex justify-between items-center gap-4">
         <div>
-          <h2>{item.prompt}</h2>
-          <p className="text-gray-500">
-            {item.type} - {new Date(item.created_at).toLocaleDateString()}
+          <h2 className="font-semibold text-text-main text-base">{item.prompt}</h2>
+          <p className="text-text-muted mt-1 text-xs">
+            {new Date(item.created_at).toLocaleDateString()}
           </p>
         </div>
-        <button className="bg-[#EFF6FF] border border-[#BFDBFE] text-[#1E40AF] px-4 py-1 rounded-full">
+        <button className="bg-surface border border-border text-text-muted px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-wide">
           {item.type}
         </button>
       </div>
+      
       {expanded && (
-        <div className="">
-          {expanded && (
-            <div>
-              {item.type === "image" ? (
-                <div className="flex flex-row items-center gap-4 p-4">
-                  <img
-                    src={item.content}
-                    alt="image"
-                    className="max-w-35 max-h-35 rounded-lg object-contain"
-                  />
-                  <a
-                    href={item.content}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download
-                    className="px-4 py-2 bg-[#00AD25] text-white text-xs rounded-lg shadow hover:bg-[#009920] transition"
-                  >
-                    Download Image
-                  </a>
-                </div>
-              ) : (
-                <div className="mt-3 h-full overflow-y-auto text-sm text-slate-700">
-                  <div className="reset-tw">
-                    <MarkDown>{item.content}</MarkDown>
-                  </div>
-                </div>
-              )}
+        <div className="mt-4 pt-4 border-t border-border">
+          {item.type === "image" ? (
+            <div className="flex flex-row items-center gap-4">
+              <img
+                src={item.content}
+                alt="image"
+                className="w-48 h-48 rounded-lg object-cover border border-border"
+              />
+              <a
+                href={item.content}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                className="px-5 py-2.5 bg-primary text-white text-xs font-medium rounded-lg hover:bg-primary-hover transition-colors"
+              >
+                Download Image
+              </a>
+            </div>
+          ) : (
+            <div className="overflow-y-auto text-sm text-text-main leading-relaxed">
+              <div className="reset-tw">
+                <MarkDown>{item.content}</MarkDown>
+              </div>
             </div>
           )}
         </div>

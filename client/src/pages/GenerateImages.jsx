@@ -56,36 +56,38 @@ const GenerateImages = () => {
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-6 flex flex-col sm:flex-row items-start gap-4 text-slate-700">
+    <div className="h-full overflow-y-auto px-4 py-8 sm:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-start gap-8">
       {/* left col */}
       <form
         onSubmit={onSubmitHandler}
-        className="w-full max-w-lg p-4 bg-white rounded-lg border border-gray-200"
+        className="w-full md:w-[45%] clean-card p-6 md:p-8"
       >
-        <div className="flex items-center gap-3">
-          <Sparkles className="w-6 text-[#00AD25]" />
-          <h1 className="text-lg font-semibold">AI Image Generator</h1>
+        <div className="flex items-center gap-3 border-b border-border pb-4 mb-6">
+          <div className="p-2 bg-green-50 rounded-lg">
+            <Sparkles className="w-5 h-5 text-emerald-600" />
+          </div>
+          <h1 className="text-xl font-bold text-text-main">AI Image Generator</h1>
         </div>
 
-        <p className="mt-6 text-sm font-medium">Describe Your Image</p>
+        <p className="text-sm font-semibold text-text-main mb-2">Describe Your Image</p>
         <textarea
           onChange={(e) => setInput(e.target.value)}
           value={input}
           rows={4}
-          className="w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300"
+          className="w-full py-2.5 px-4 outline-none text-sm rounded-lg border border-border focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 transition-all text-text-main mb-6 bg-surface"
           placeholder="Describe what you want to see in the image..."
           required
         />
 
-        <p className="mt-4 text-sm font-medium">Style</p>
-        <div className="mt-3 flex gap-3 flex-wrap max-w-full">
+        <p className="text-sm font-semibold text-text-main mb-3">Style</p>
+        <div className="flex gap-2 flex-wrap mb-8">
           {imageStyle.map((item) => (
             <span
               key={item}
-              className={`text-xs px-4 py-1 border rounded-full cursor-pointer ${
+              className={`text-xs px-4 py-2 border rounded-lg cursor-pointer font-medium transition-colors ${
                 selectedStyle === item
-                  ? "bg-green-50 text-green-700 border-green-300"
-                  : "text-gray-500 border-gray-300"
+                  ? "bg-green-50 text-emerald-700 border-emerald-300"
+                  : "bg-white text-text-muted border-border hover:bg-surface hover:text-text-main"
               }`}
               onClick={() => setSelectedStyle(item)}
             >
@@ -94,7 +96,8 @@ const GenerateImages = () => {
           ))}
         </div>
 
-        <div className="my-6 flex items-center gap-2">
+        <div className="mb-6 flex items-center justify-between p-4 bg-surface rounded-lg border border-border">
+          <p className="text-sm font-medium text-text-main">Make this image Public</p>
           <label className="relative cursor-pointer">
             <input
               type="checkbox"
@@ -102,57 +105,58 @@ const GenerateImages = () => {
               checked={publish}
               className="sr-only peer"
             />
-            <div className="w-9 h-5 bg-slate-300 rounded-full peer-checked:bg-green-500 transition"></div>
-            <span className="absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition peer-checked:translate-x-4"></span>
+            <div className="w-10 h-5 bg-border rounded-full peer-checked:bg-emerald-500 transition-colors border border-border peer-checked:border-emerald-600"></div>
+            <span className="absolute left-[3px] top-[3px] w-3.5 h-3.5 bg-white rounded-full transition-transform peer-checked:translate-x-5"></span>
           </label>
-          <p className="text-sm">Make this image Public</p>
         </div>
 
         <button
           disabled={loading}
-          className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#00AD25] to-[#04FF50] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer disabled:opacity-70"
+          className="w-full flex justify-center items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 text-sm font-medium rounded-lg transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {loading ? (
             <span className="w-4 h-4 rounded-full border-2 border-t-transparent border-white animate-spin"></span>
           ) : (
-            <ImageIcon className="w-5" />
+            <ImageIcon className="w-4 h-4" />
           )}
           {loading ? "Generating..." : "Generate Image"}
         </button>
       </form>
 
       {/* right col */}
-      <div className="w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-96">
-        <div className="flex items-center gap-3">
-          <ImageIcon className="w-5 h-5 text-[#00AD25]" />
-          <h1 className="text-lg font-semibold">Generated Image</h1>
+      <div className="w-full md:w-[55%] clean-card flex flex-col min-h-[500px]">
+        <div className="flex items-center gap-3 border-b border-border p-6 bg-surface/50 rounded-t-xl">
+          <ImageIcon className="w-5 h-5 text-emerald-600" />
+          <h1 className="text-lg font-bold text-text-main">Generated Image</h1>
         </div>
 
-        {!content ? (
-          <div className="flex-1 flex justify-center items-center">
-            <div className="text-sm flex flex-col items-center gap-5 text-gray-400">
-              <ImageIcon className="w-9 h-9" />
-              <p>Enter a topic and click "Generate Image" to get started</p>
+        <div className="p-6 flex-1 flex flex-col justify-center items-center">
+          {!content ? (
+            <div className="text-sm flex flex-col items-center gap-4 text-text-muted">
+              <div className="w-16 h-16 rounded-full bg-surface-hover flex items-center justify-center border border-dashed border-border mb-2">
+                <ImageIcon className="w-8 h-8 text-border" />
+              </div>
+              <p>Enter a description and click generate to see the magic.</p>
             </div>
-          </div>
-        ) : (
-          <div className="mt-3 flex flex-col items-center gap-4">
-            <img
-              src={content}
-              alt="Generated"
-              className="max-w-100 max-h-100 rounded-lg object-cover"
-            />
-            <a
-              href={content}
-              target="_blank"
-              rel="noopener noreferrer"
-              download
-              className="px-4 py-2 bg-[#00AD25] text-white text-sm rounded-lg shadow hover:bg-[#009920] transition"
-            >
-              Download Image
-            </a>
-          </div>
-        )}
+          ) : (
+            <div className="flex flex-col items-center gap-6 w-full">
+              <img
+                src={content}
+                alt="Generated"
+                className="w-full max-w-md rounded-xl object-cover border border-border shadow-sm"
+              />
+              <a
+                href={content}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition"
+              >
+                Download Image
+              </a>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
